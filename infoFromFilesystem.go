@@ -10,6 +10,12 @@ import (
 )
 
 // Hot-Fix for when *SOMETHING* broke with an update of Linux kernel on SkaarOS.
+// The Something was information about Serial, Product and Manufacturer
+// of USB devices. This information is now read from the filesystem instead of
+// the HID API. This is a temporary fix until the underlying issue is resolved.
+// The issue is that the HID API does not return the serial number, product and
+// manufacturer for USB devices on SkaarOS with the latest kernel (6)
+// - kasper
 
 type usbInfo struct {
 	Manufacturer string

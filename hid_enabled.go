@@ -45,7 +45,6 @@ import "C"
 
 import (
 	"errors"
-	"fmt"
 	"runtime"
 	"sync"
 	"unsafe"
@@ -106,9 +105,8 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 			info.Manufacturer, _ = wcharTToString(head.manufacturer_string)
 		}
 		if info.Serial == "" && info.Product == "" && info.Manufacturer == "" {
-			fmt.Println(info.Path)
 			getUSBdeviceInfoFromFilesystem(&info)
-			fmt.Println(info.Serial, info.Product, info.Manufacturer)
+			//fmt.Println(info.Serial, info.Product, info.Manufacturer)
 		}
 		infos = append(infos, info)
 	}
