@@ -84,8 +84,6 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 	}
 	defer C.hid_free_enumeration(head)
 
-	fmt.Println("********* SCAN *********")
-
 	// Iterate the list and retrieve the device details
 	var infos []DeviceInfo
 	for ; head != nil; head = head.next {
@@ -108,15 +106,13 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 			info.Manufacturer, _ = wcharTToString(head.manufacturer_string)
 		}
 		if info.Serial == "" && info.Product == "" && info.Manufacturer == "" {
-
+			fmt.Println(info.Path)
+			getUSBdeviceInfoFromFilesystem(&info)
+			fmt.Println(info.Serial, info.Product, info.Manufacturer)
 		}
 		infos = append(infos, info)
 	}
 	return infos
-}
-
-func updateSerialProductManufacturer(info *DeviceInfo) {
-	fmt.Println(info.Path)
 }
 
 // Open connects to an HID device by its path name.
