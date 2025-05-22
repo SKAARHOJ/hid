@@ -96,17 +96,17 @@ func getUSBdeviceInfoFromFilesystem(info *DeviceInfo) {
 	}
 }
 
-func parseBusDevFromPath(path string) (bus int, dev int, ok bool) {
+func parseBusDevFromPath(path string) (int, int, bool) {
 	parts := strings.Split(path, ":")
 	if len(parts) < 2 {
 		return 0, 0, false
 	}
-	bus, err1 := strconv.Atoi(parts[0])
-	dev, err2 := strconv.Atoi(parts[1])
+	bus, err1 := strconv.ParseInt(parts[0], 16, 0)
+	dev, err2 := strconv.ParseInt(parts[1], 16, 0)
 	if err1 != nil || err2 != nil {
 		return 0, 0, false
 	}
-	return bus, dev, true
+	return int(bus), int(dev), true
 }
 
 func readSysAttr(devPath, attr string) string {
