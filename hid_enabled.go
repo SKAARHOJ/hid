@@ -89,9 +89,6 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 	// Iterate the list and retrieve the device details
 	var infos []DeviceInfo
 	for ; head != nil; head = head.next {
-
-		fmt.Println(head.path)
-
 		info := DeviceInfo{
 			Path:      C.GoString(head.path),
 			VendorID:  uint16(head.vendor_id),
@@ -110,9 +107,16 @@ func Enumerate(vendorID uint16, productID uint16) []DeviceInfo {
 		if head.manufacturer_string != nil {
 			info.Manufacturer, _ = wcharTToString(head.manufacturer_string)
 		}
+		if info.Serial == "" && info.Product == "" && info.Manufacturer == "" {
+
+		}
 		infos = append(infos, info)
 	}
 	return infos
+}
+
+func updateSerialProductManufacturer(info *DeviceInfo) {
+	fmt.Println(info.Path)
 }
 
 // Open connects to an HID device by its path name.
