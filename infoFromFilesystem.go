@@ -7,8 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-
-	"github.com/SKAARHOJ/hid"
 )
 
 // Hot-Fix for when *SOMETHING* broke with an update of Linux kernel on SkaarOS.
@@ -24,7 +22,7 @@ var (
 	usbCacheLock sync.RWMutex               // protects usbCache
 )
 
-func getUSBdeviceInfoFromFilesystem(info *hid.DeviceInfo) {
+func getUSBdeviceInfoFromFilesystem(info *DeviceInfo) {
 
 	// Check cache under read lock
 	usbCacheLock.RLock()
